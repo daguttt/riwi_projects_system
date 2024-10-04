@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.riwi.riwi_projects_system.users.domain.UserEntity;
 import com.riwi.riwi_projects_system.users.domain.UserRepository;
 
 @Component
@@ -16,8 +17,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    return userRepository.findByEmail(email)
+    UserEntity userEntityOptional = userRepository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+    return new UserDetailsImpl(userEntityOptional);
   }
 
 }
