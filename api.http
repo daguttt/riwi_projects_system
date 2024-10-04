@@ -1,0 +1,8 @@
+@host = http://localhost:8080/api/v1
+@password = e4e6eff0-a608-41e2-802e-83fb71757462
+
+# Register user
+POST {{host}}/auth/register  HTTP/1.1
+Authorization: Basic user {{password}}
+Content-Type: application/json
+
