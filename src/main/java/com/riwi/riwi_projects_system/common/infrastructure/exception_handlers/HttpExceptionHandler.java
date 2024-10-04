@@ -1,4 +1,4 @@
-package com.riwi.riwi_projects_system.infrastructure.exception_handlers;
+package com.riwi.riwi_projects_system.common.infrastructure.exception_handlers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

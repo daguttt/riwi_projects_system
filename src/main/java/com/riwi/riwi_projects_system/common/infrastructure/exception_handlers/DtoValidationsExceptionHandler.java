@@ -1,4 +1,4 @@
-package com.riwi.riwi_projects_system.infrastructure.exception_handlers;
+package com.riwi.riwi_projects_system.common.infrastructure.exception_handlers;
 
 import java.util.Map;
 
@@ -20,8 +20,7 @@ public class DtoValidationsExceptionHandler {
         "The request body data may not have valid values");
 
     problemDetails.setProperty("errors", exception.getAllErrors().stream().map(err -> {
-      return Map.ofEntries(
-          Map.entry("field", ((FieldError) err).getField()),
+      return Map.ofEntries(Map.entry("field", ((FieldError) err).getField()),
           Map.entry("error", err.getDefaultMessage()));
     }).toArray());
 

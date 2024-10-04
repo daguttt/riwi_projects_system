@@ -1,4 +1,4 @@
-package com.riwi.riwi_projects_system.infrastructure;
+package com.riwi.riwi_projects_system.common.infrastructure.open_api;
 
 import java.util.Collections;
 
@@ -26,8 +26,8 @@ public class OpenApiConfig {
     // Define the server for OpenAPI
     Server localServer = new Server().url(localServerUrl).description("Local Development Server");
 
-    Info info = new Info().title("Riwi Projects System API").version("1.0.0").description(
-        "REST API to manage projects and tasks.");
+    Info info = new Info().title("Riwi Projects System API").version("1.0.0")
+        .description("REST API to manage projects and tasks.");
     return new OpenAPI().servers(Collections.singletonList(localServer)).info(info);
   }
 }
