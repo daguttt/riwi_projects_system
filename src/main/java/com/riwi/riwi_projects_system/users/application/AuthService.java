@@ -1,6 +1,7 @@
 package com.riwi.riwi_projects_system.users.application;
 
 import java.util.Optional;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class AuthService {
 
     // Generate token
     UserDetails userDetails = new UserDetailsImpl(foundUser);
-    String token = jwtUtils.generateToken(userDetails);
+    String token = jwtUtils.generateToken(Map.of("role", foundUser.getRole()), userDetails);
     return new LoginResponseDataDto(token);
 
   }
