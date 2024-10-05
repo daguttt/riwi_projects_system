@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.riwi.riwi_projects_system.users.infrastructure.dtos.request.LoginUserDto;
 import com.riwi.riwi_projects_system.users.infrastructure.dtos.request.RegisterUserDto;
+import com.riwi.riwi_projects_system.users.infrastructure.dtos.response.LoginResponseDataDto;
+import com.riwi.riwi_projects_system.users.infrastructure.dtos.response.LoginResponseDto;
 import com.riwi.riwi_projects_system.users.infrastructure.dtos.response.RegisterResponseDto;
 
 @RestController
@@ -48,6 +51,29 @@ public class AuthController {
     RegisterResponseDto registerResponseDto = RegisterResponseDto.builder().status(HttpStatus.CREATED.value())
         .message("User registered successfully").build();
     return ResponseEntity.status(HttpStatus.CREATED).body(registerResponseDto);
+  }
+
+  @Operation(summary = "User authentication", description = "Description: Logs in a user")
+  @ApiResponses(
+      value = {
+          @ApiResponse(responseCode = "200", description = "User authentication is successful",
+              content = { @Content(mediaType = "application/json",
+                  schema = @Schema(implementation = LoginResponseDto.class)) }),
+          @ApiResponse(responseCode = "400", description = "The request body has invalid values",
+              content = { @Content(mediaType = "application/json",
+                  schema = @Schema(implementation = ProblemDetailWithErrors.class)) }),
+          @ApiResponse(responseCode = "401", description = "Invalid credentials",
+              content = {
+                  @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class)) }),
+          @ApiResponse(responseCode = "404", description = "User not found",
+              content = @Content(mediaType = "application/json",
+                  schema = @Schema(implementation = ProblemDetail.class))) })
+  @PostMapping("/login")
+  public ResponseEntity<LoginResponseDto> loginUser(@Valid @RequestBody LoginUserDto loginUserDto) {
+    LoginResponseDataDto loginResponseDataDto = this.authService.login(loginUserDto);
+    LoginResponseDto loginResponseDto = LoginResponseDto.builder().status(HttpStatus.OK.value())
+        .message("User successfully authenticated!").data(loginResponseDataDto).build();
+    return ResponseEntity.ok(loginResponseDto);
   }
 
 }
