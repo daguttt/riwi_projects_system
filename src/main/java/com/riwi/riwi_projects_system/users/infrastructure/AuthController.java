@@ -70,8 +70,9 @@ public class AuthController {
                   schema = @Schema(implementation = ProblemDetail.class))) })
   @PostMapping("/login")
   public ResponseEntity<LoginResponseDto> loginUser(@Valid @RequestBody LoginUserDto loginUserDto) {
-    LoginResponseDataDto loginResponseDataDto = this.authService.login(loginUserDto);
-    LoginResponseDto loginResponseDto = LoginResponseDto.builder().status(HttpStatus.OK.value())
+      String token = authService.login(loginUserDto);
+      LoginResponseDataDto loginResponseDataDto = new LoginResponseDataDto(token);
+      LoginResponseDto loginResponseDto = LoginResponseDto.builder().status(HttpStatus.OK.value())
         .message("User successfully authenticated!").data(loginResponseDataDto).build();
     return ResponseEntity.ok(loginResponseDto);
   }

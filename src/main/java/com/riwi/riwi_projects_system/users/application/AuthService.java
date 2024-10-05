@@ -21,7 +21,6 @@ import com.riwi.riwi_projects_system.users.domain.UserEntity;
 import com.riwi.riwi_projects_system.users.domain.UserRepository;
 import com.riwi.riwi_projects_system.users.infrastructure.dtos.request.LoginUserDto;
 import com.riwi.riwi_projects_system.users.infrastructure.dtos.request.RegisterUserDto;
-import com.riwi.riwi_projects_system.users.infrastructure.dtos.response.LoginResponseDataDto;
 
 @Service
 public class AuthService {
@@ -61,7 +60,7 @@ public class AuthService {
     logger.info(message);
   }
 
-  public LoginResponseDataDto login(LoginUserDto loginUserDto) {
+  public String login(LoginUserDto loginUserDto) {
     // Check if user exists
     UserEntity foundUser = userRepository.findByEmail(loginUserDto.getEmail())
         .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND,
@@ -74,7 +73,7 @@ public class AuthService {
     // Generate token
     UserDetails userDetails = new UserDetailsImpl(foundUser);
     String token = jwtUtils.generateToken(Map.of("role", foundUser.getRole()), userDetails);
-    return new LoginResponseDataDto(token);
+    return token;
 
   }
 }
