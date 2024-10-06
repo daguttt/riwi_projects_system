@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import jakarta.mail.Address;
@@ -25,6 +26,7 @@ public class EmailUtils {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Async
     public void sendHtmlEmail(String[] recipients, String subject, String htmlTemplate)
             throws MessagingException, RuntimeException {
         MimeMessage message = this.javaMailSender.createMimeMessage();
