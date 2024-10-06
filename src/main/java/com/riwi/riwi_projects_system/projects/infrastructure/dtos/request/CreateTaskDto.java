@@ -25,6 +25,7 @@ public class CreateTaskDto {
   @NotBlank(message = "Task state cannot be blank")
   private String state;
 
+  @Schema(example = "Task description", description = "Description of the task")
   @NotBlank(message = "Description cannot be blank")
   private String description;
 }
