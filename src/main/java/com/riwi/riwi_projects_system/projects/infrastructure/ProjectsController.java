@@ -90,10 +90,10 @@ public class ProjectsController {
         return ResponseEntity.ok("Updating the project with id: " + id);
     }
 
-@DeleteMapping("/{id}")
-public ResponseEntity<ProjectEntity> deleteProject(@PathVariable Long id) {
-    projectsService.deleteProject(id);
-    return ResponseEntity.noContent().build();
-}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProjectEntity> deleteProject(@PathVariable Long id) {
+        projectsService.deleteProject(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
