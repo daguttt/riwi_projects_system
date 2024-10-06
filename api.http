@@ -1,6 +1,6 @@
 @host = http://localhost:8080/api/v1
 @password = e4e6eff0-a608-41e2-802e-83fb71757462
-@token = eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJkYW5pZWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MTczMzc5LCJleHAiOjE3MjgxNzY5Nzl9.YZsO1gWPNT89XkR5gDrXPvmD66efLmApaaPz92tBYHs
+@token = eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJkYW5pZWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MTgwMDkwLCJleHAiOjE3MjgxODM2OTB9.SG2vQ1pm4NzfLF-lKdumouIzbSaUOG-Xyl9_G9z7NJg
 
 # Register user
 POST {{host}}/auth/register  HTTP/1.1
@@ -46,3 +46,16 @@ Authorization: Bearer {{token}}
     }
   ]
 }
+
+###
+
+# Demo Email
+GET {{host}}/demos/emails
+
+
+### -*********************************************************-
+
+# TASKS
+
+# Update task state
+PATCH {{host}}/tasks/3?newState=COMPLETED
