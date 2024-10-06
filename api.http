@@ -1,6 +1,6 @@
 @host = http://localhost:8080/api/v1
 @password = e4e6eff0-a608-41e2-802e-83fb71757462
-@token = eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJkYW5pZWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MTE0MTc0LCJleHAiOjE3MjgxMTc3NzR9.c3wkwxk-Wn-Vs8tfLwuLbCgorv1QiToEvjY7up10mgM
+@token = eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJzdWIiOiJkYW5pZWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MTczMzc5LCJleHAiOjE3MjgxNzY5Nzl9.YZsO1gWPNT89XkR5gDrXPvmD66efLmApaaPz92tBYHs
 
 # Register user
 POST {{host}}/auth/register  HTTP/1.1
@@ -32,5 +32,17 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Fistt"
+  "name": "Proyecsito",
+  "tasks": [
+    {
+      "title": "Task 1",
+      "state": "UNINITIALIZED",
+      "description": "This is my first task"
+    },
+    {
+      "title": "Task 2",
+      "state": "IN_PROGRESS",
+      "description": "Task 2 description"
+    }
+  ]
 }

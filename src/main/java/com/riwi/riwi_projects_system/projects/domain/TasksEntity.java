@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,10 @@ public class TasksEntity {
     @Column(nullable = false)
     private TaskStates state;
 
+    @Column(nullable = false)
+    private String description;
+
     @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
     private ProjectEntity project;
 }

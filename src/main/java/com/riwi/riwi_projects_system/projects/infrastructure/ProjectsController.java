@@ -1,7 +1,5 @@
 package com.riwi.riwi_projects_system.projects.infrastructure;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +24,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/projects")
 public class ProjectsController {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
     @Autowired
     private ProjectsService projectsService;
 
@@ -35,8 +31,7 @@ public class ProjectsController {
     @PostMapping
     public ResponseEntity<ProjectCreatedResponseDto> createProject(
             @Valid @RequestBody CreateProjectDto createProjectDto) {
-        this.logger.info("Creating project: {}", createProjectDto);
-        // projectsService.createProject(createProjectDto);
+        this.projectsService.createProject(createProjectDto);
         ProjectCreatedResponseDto projectCreatedResponseDto = ProjectCreatedResponseDto
                 .builder().status(201).message("Project created successfully").build();
         return ResponseEntity.status(HttpStatus.CREATED).body(projectCreatedResponseDto);
