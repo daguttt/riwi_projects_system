@@ -25,6 +25,10 @@ https://github.com/daguttt/riwi_projects_system
 > [!TIP]
 > Use whichever text for the *"Text to Compute Hash"* and *"Secret Key"* fields in the website.
 
+3. **Emails functionality:** 
+   - The `MAIL_PASSWORD` must be an **app password** of your Gmail (*Google*) account. You can generate one in [Google App Passwords](https://myaccount.google.com/apppasswords)
+   - The `MAIL_USERNAME` is the **email address** of your Gmail account (e.g. `my-username@gmail.com`).
+
 ## 2. Database Setup
 Create the database named as in the [`.env.example` file](./src/main/resources/.env.example), otherwise running the appication will throw an entityManager error.
 

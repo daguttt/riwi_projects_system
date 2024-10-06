@@ -23,7 +23,7 @@ import com.riwi.riwi_projects_system.users.domain.Roles;
 public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPOINTS = { "/auth/**", "/swagger-ui/**",
-            "/api-docs/v3/**", "/tasks/**" };
+            "/api-docs/v3/**", "/tasks/**", "/demos/**" };
     private final String[] ADMIN_ENDPOINTS = { "/projects/**" };
 
     @Autowired
