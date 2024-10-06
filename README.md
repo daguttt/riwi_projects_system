@@ -3,6 +3,14 @@
 
 REST API to manage projects and tasks.
 
+# Notion page
+
+[Riwi Projects System - Notion Page](https://daguttt.notion.site/Riwi-Projects-System-Spring-Boot-115bb315d6b98019bf42d172a3aa3517?pvs=4)
+
+In the Notion Page you can find:
+1. The Relational Model of the Database.
+2. Project planning.
+
 # Repository URL
 https://github.com/daguttt/riwi_projects_system
 
