@@ -29,7 +29,7 @@ public class ProjectsService {
     }
 
     @Transactional
-    public void createProject(CreateProjectDto createProjectDto) {
+    public Long createProject(CreateProjectDto createProjectDto) {
         // Create the project and save it in the database
         ProjectEntity projectsEntity = new ProjectEntity();
         projectsEntity.setName(createProjectDto.getName());
@@ -48,6 +48,8 @@ public class ProjectsService {
             tasksSet.add(taskEntity);
         }
         this.tasksRepository.saveAll(tasksSet);
+
+        return savedProjectEntity.getId();
     }
 
     public ProjectEntity updateProject(CreateProjectDto createProjectsDto, Long id) {
