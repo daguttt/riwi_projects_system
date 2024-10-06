@@ -26,7 +26,7 @@ https://github.com/daguttt/riwi_projects_system
 > Use whichever text for the *"Text to Compute Hash"* and *"Secret Key"* fields in the website.
 
 ## 2. Database Setup
-Create the database named as in the [`.env.example` file](./src/main/resources/.env.example).
+Create the database named as in the [`.env.example` file](./src/main/resources/.env.example), otherwise running the appication will throw an entityManager error.
 
 ## 3. Run the application
 You can now safely run the application using your preferred way:
@@ -36,3 +36,9 @@ You can now safely run the application using your preferred way:
     ```bash
     ./mvnw spring-boot:run
     ```
+> [!TIP]
+> If you get an error running the application, with the Maven command... 
+> <details>
+> <summary>Make sure to give executable (<code>x</code>) permissions</summary>
+> <pre>chmod ugo+x ./mvnw</pre>
+> </details>
