@@ -51,3 +51,11 @@ Authorization: Bearer {{token}}
 
 # Demo Email
 GET {{host}}/demos/emails
+
+
+### -*********************************************************-
+
+# TASKS
+
+# Update task state
+PATCH {{host}}/tasks/3?newState=COMPLETED
