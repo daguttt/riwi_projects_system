@@ -22,9 +22,9 @@ import com.riwi.riwi_projects_system.users.domain.Roles;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS = { "/auth/**", "/swagger-ui/**",
-            "/api-docs/v3/**" };
-    private final String[] ADMIN_ENDPOINTS = { "/projects/**" };
+  private final String[] PUBLIC_ENDPOINTS = { "/auth/**", "/swagger-ui/**",
+      "/api-docs/v3/**", "/tasks/**" };
+  private final String[] ADMIN_ENDPOINTS = { "/projects/**" };
 
   @Autowired
   private UserDetailsService userDetailsService;
@@ -56,10 +56,10 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(
-                    request -> request.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                            .requestMatchers(ADMIN_ENDPOINTS)
-                            .hasAuthority(Roles.ADMIN.name()).anyRequest()
-                            .authenticated())
+            request -> request.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                .requestMatchers(ADMIN_ENDPOINTS)
+                .hasAuthority(Roles.ADMIN.name()).anyRequest()
+                .authenticated())
         .authenticationProvider(authenticationProvider())
         .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
