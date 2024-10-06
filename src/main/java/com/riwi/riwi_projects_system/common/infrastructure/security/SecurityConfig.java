@@ -22,47 +22,49 @@ import com.riwi.riwi_projects_system.users.domain.Roles;
 @EnableWebSecurity
 public class SecurityConfig {
 
-  private final String[] PUBLIC_ENDPOINTS = { "/auth/**", "/swagger-ui/**",
-      "/api-docs/v3/**", "/tasks/**" };
-  private final String[] ADMIN_ENDPOINTS = { "/projects/**" };
+    private final String[] PUBLIC_ENDPOINTS = { "/auth/**", "/swagger-ui/**",
+            "/api-docs/v3/**", "/tasks/**" };
+    private final String[] ADMIN_ENDPOINTS = { "/projects/**" };
 
-  @Autowired
-  private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-  @Autowired
-  private JwtAuthFilter jwtAuthFilter;
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter;
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-      throws Exception {
-    return authenticationConfiguration.getAuthenticationManager();
-  }
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
-  @Bean
-  public AuthenticationProvider authenticationProvider() {
-    var authenticationProvider = new DaoAuthenticationProvider();
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        var authenticationProvider = new DaoAuthenticationProvider();
 
-    authenticationProvider.setPasswordEncoder(this.passwordEncoder());
-    authenticationProvider.setUserDetailsService(this.userDetailsService);
-    return authenticationProvider;
-  }
+        authenticationProvider.setPasswordEncoder(this.passwordEncoder());
+        authenticationProvider.setUserDetailsService(this.userDetailsService);
+        return authenticationProvider;
+    }
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(
-            request -> request.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                .requestMatchers(ADMIN_ENDPOINTS)
-                .hasAuthority(Roles.ADMIN.name()).anyRequest()
-                .authenticated())
-        .authenticationProvider(authenticationProvider())
-        .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .addFilterBefore(this.jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
-  }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(ADMIN_ENDPOINTS).hasAuthority(Roles.ADMIN.name())
+                        .anyRequest().authenticated())
+                .authenticationProvider(authenticationProvider())
+                .sessionManagement(sessionManager -> sessionManager
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(this.jwtAuthFilter,
+                        UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
 
 }

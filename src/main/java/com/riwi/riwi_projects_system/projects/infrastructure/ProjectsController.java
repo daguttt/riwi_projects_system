@@ -67,14 +67,14 @@ public class ProjectsController {
     }
 
     @GetMapping("/{id}")
-    // public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable
-    // id) {
-    public ResponseEntity<String> getProjectById(@PathVariable Long id) {
-        // ProjectEntity projectEntity = projectsService.getProjectById(id);
-
-        // projectsService.getProjectById(id).map(ResponseEntity::
-        // ok).orElse(ResponseEntity.notFound().build());
-        return ResponseEntity.ok("Project with id" + id + " was found");
+    public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable Long id) {
+        ProjectEntity projectEntity = this.projectsService.getProjectById(id);
+        ProjectResponseDtoData projectResponseDataDto = new ProjectResponseDtoData(
+                projectEntity.getId(), projectEntity.getName());
+        ProjectResponseDto projectResponseDto = ProjectResponseDto.builder()
+                .status(HttpStatus.OK.value()).message("Successfully fetched the project")
+                .data(projectResponseDataDto).build();
+        return ResponseEntity.ok(projectResponseDto);
     }
 
     @GetMapping
@@ -90,10 +90,10 @@ public class ProjectsController {
         return ResponseEntity.ok("Updating the project with id: " + id);
     }
 
-@DeleteMapping("/{id}")
-public ResponseEntity<ProjectEntity> deleteProject(@PathVariable Long id) {
-    projectsService.deleteProject(id);
-    return ResponseEntity.noContent().build();
-}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProjectEntity> deleteProject(@PathVariable Long id) {
+        projectsService.deleteProject(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

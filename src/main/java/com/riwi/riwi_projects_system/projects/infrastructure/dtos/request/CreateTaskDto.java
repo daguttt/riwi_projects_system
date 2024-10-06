@@ -16,15 +16,17 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateTaskDto {
 
-  @Schema(example = "Task 1", description = "Title of the task")
-  @NotBlank(message = "Task title cannot be blank")
-  private String title;
+    @Schema(example = "Task 1", description = "Title of the task")
+    @NotBlank(message = "Task title cannot be blank")
+    private String title;
 
-  @Schema(example = "UNINITIALIZED", description = "State of the task", implementation = TaskStates.class)
-  @ValidEnum(enumClass = TaskStates.class, message = "Task state must be either 'UNINITIALIZED', 'IN_PROGRESS', or 'COMPLETED'")
-  @NotBlank(message = "Task state cannot be blank")
-  private String state;
+    @Schema(example = "UNINITIALIZED", description = "State of the task",
+            implementation = TaskStates.class)
+    @ValidEnum(enumClass = TaskStates.class,
+            message = "Task state must be either 'UNINITIALIZED', 'IN_PROGRESS', or 'COMPLETED'")
+    @NotBlank(message = "Task state cannot be blank")
+    private String state;
 
-  @NotBlank(message = "Description cannot be blank")
+      @Schea(ex  @NotBlank(message = "Description cannot be blank")
   private String description;
 }
