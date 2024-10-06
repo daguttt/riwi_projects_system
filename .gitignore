@@ -30,4 +30,8 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+.vscode/launch.json
+.vscode/settings.json
+
+### Environment ###
+src/main/resources/.env
