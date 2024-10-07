@@ -1,5 +1,7 @@
 package com.riwi.riwi_projects_system.projects.aplication;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,10 @@ public class TasksService {
     public TasksService(TasksRepository tasksRepository, EmailUtils emailUtils) {
         this.tasksRepository = tasksRepository;
         this.emailUtils = emailUtils;
+    }
+
+    public List<TasksEntity> getAllTasks() {
+        return tasksRepository.findAll();
     }
 
     public TasksEntity createTask(CreateTaskDto createTaskDto) {

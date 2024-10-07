@@ -3,10 +3,10 @@ package com.riwi.riwi_projects_system.projects.infrastructure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,10 +15,10 @@ import com.riwi.riwi_projects_system.common.infrastructure.dtos.response.Problem
 import com.riwi.riwi_projects_system.projects.aplication.TasksService;
 import com.riwi.riwi_projects_system.projects.domain.TaskStates;
 import com.riwi.riwi_projects_system.projects.domain.TasksEntity;
-import com.riwi.riwi_projects_system.projects.infrastructure.dtos.request.CreateTaskDto;
+import com.riwi.riwi_projects_system.projects.infrastructure.dtos.response.GetAllTasksResponseDto;
+import com.riwi.riwi_projects_system.projects.infrastructure.dtos.response.TaskDto;
 import com.riwi.riwi_projects_system.projects.infrastructure.dtos.response.UpdatedTaskStateDto;
 import com.riwi.riwi_projects_system.projects.infrastructure.dtos.response.UpdatedTaskStateResponseDto;
-import com.riwi.riwi_projects_system.projects.infrastructure.dtos.response.TaskRespondeDto.TaskResponseDtoData;
 import com.riwi.riwi_projects_system.projects.infrastructure.mappers.TasksMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,22 +31,29 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RequestMapping("/tasks")
 public class TasksController {
 
-  @Autowired
-  private TasksService tasksService;
+    @Autowired
+    private TasksService tasksService;
 
-  @Operation(summary = "View tasks", description = "Description: View all tasks")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Task created successfully", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = TaskResponseDtoData.class)) }),
-      @ApiResponse(responseCode = "400", description = "The request body has invalid values", content = {
-          @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetailWithErrors.class)) }),
-      @ApiResponse(responseCode = "401", description = "Unauthorized or Token Expired", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProblemDetail.class))) })
-
-  @PostMapping
-  public CreateTaskDto createTask(@RequestBody CreateTaskDto createTaskDto) {
-    tasksService.createTask(createTaskDto);
-    return createTaskDto;
-  }
+    @Operation(summary = "View tasks", description = "Description: View all tasks")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tasks successfully fetched",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(
+                                    implementation = GetAllTasksResponseDto.class)) }),
+            @ApiResponse(responseCode = "401",
+                    description = "Unauthorized or Token Expired",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProblemDetail.class))) })
+    @GetMapping
+    public ResponseEntity<GetAllTasksResponseDto> getAllTasks() {
+        var taskEntityList = tasksService.getAllTasks();
+        var taskDtoList = taskEntityList.stream()
+                .map(TasksMapper.INSTANCE::taskEntityToTaskDto).toArray(TaskDto[]::new);
+        var getAllTasksResponseDto = GetAllTasksResponseDto.builder()
+                .status(HttpStatus.OK.value()).message("Tasks successfully fetched")
+                .data(taskDtoList).build();
+        return ResponseEntity.ok(getAllTasksResponseDto);
+    }
 
     @Operation(summary = "Change task state",
             description = "Description: Change task state and notify users via email about the change")
