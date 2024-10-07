@@ -15,6 +15,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,11 +31,13 @@ import lombok.experimental.SuperBuilder;
 public abstract class AuditableEntity {
   @CreatedDate
   @Column(nullable = false, updatable = false, columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
-  private LocalDateTime createdAt;
+  @Builder.Default
+  private LocalDateTime createdAt = LocalDateTime.now();
 
   @LastModifiedDate
   @Column(columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
-  private LocalDateTime modifiedAt;
+  @Builder.Default
+  private LocalDateTime modifiedAt = LocalDateTime.now();
 
   @CreatedBy
   @OneToOne
